@@ -13,7 +13,7 @@ class Rect {
             push();
             translate(pos.x, pos.y);
             rotate(angle)
-            rectMode(CENTER)
+            rectMode(CENTER);
             fill(color);
             rect(0, 0, w, h);
             pop();
@@ -57,8 +57,8 @@ class Circle {
 
             push();
             translate(pos.x, pos.y);
-            rotate(angle)
-            rectMode(CENTER)
+            rotate(angle);
+            rectMode(CENTER);
             fill(color);
             ellipse(0, 0, r);
             pop();
@@ -77,7 +77,7 @@ class Circle {
 //No segundo parâmetro especifica a cor de todos os corpos da primeira array.
 function poliDisplay(bodies, color="white"){
     for(let i = 0; i<bodies.length; i++){
-        bodies[i].display(color);
+        bodies[i].display(color, false);
     }
 }
     
@@ -106,7 +106,7 @@ function drawGrid(w, gap, intersections=false){
     for(let i = 0; i<w; i+=gap){
         if(intersections===true){
             push();
-            stroke(200)
+            stroke("#e1e1e1");
             line(0, i, w, i);
             line(i, 0, i, w);
             pop();
@@ -121,5 +121,26 @@ function displayMousePosition(){
     push();
     text("mouse X: "+mouseX, 0, 20);
     text("mouse Y: "+mouseY, 0, 35)
+    pop();
+}
+
+function displayFrameCount(division=1){
+    push();
+    text("Frame Count: "+floor(frameCount/division), 0, 50);
+    pop();
+}
+
+function awake(bodies){
+    for(let i = 0; i<bodies.length; i++){
+        Matter.Sleeping.set(bodies[i].getBody(), false);
+    }
+}
+
+function flag(x, y, color){
+    push();
+    rectMode(CENTER)
+    rect(x,y-15, 2.5,50);
+    fill(color)
+    triangle(x, y-40,  x, y-20,  x+20,y-30);
     pop();
 }
